@@ -27,6 +27,11 @@ class JsonEncoder
         return \json_encode($this->encodeRecursive($value));
     }
 
+    public function transform($value)
+    {
+        return $this->encodeRecursive($value);
+    }
+
     private function encodeRecursive($value, array $stack = [])
     {
         if (is_array($value)) {
