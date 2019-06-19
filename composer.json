@@ -1,6 +1,6 @@
 {
   "name": "widi/json-encode",
-  "description": "Makes a deep json encode without public properties.",
+  "description": "A light weight deep json encoder which avoids recursive encoding.",
   "license": "MIT",
   "autoload": {
     "psr-4": {
