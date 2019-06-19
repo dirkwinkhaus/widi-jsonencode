@@ -1,5 +1,5 @@
 # Widi\Json-Encode
-A light deep json encoder which avoids recursive encoding.
+A light weight deep json encoder which avoids recursive encoding.
 
 ## Usage
 	<?php
