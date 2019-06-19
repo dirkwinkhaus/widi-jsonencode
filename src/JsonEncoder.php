@@ -14,26 +14,20 @@ class JsonEncoder
     /** @var CacheInterface */
     private $cache;
 
-    /**
-     * JsonEncoder constructor.
-     * @param MethodFilterInterface $methodFilter
-     * @param CacheInterface $cache
-     */
     public function __construct(
         MethodFilterInterface $methodFilter,
-        ?CacheInterface $cache = null
+        CacheInterface $cache
     ) {
         $this->methodFilter = $methodFilter;
         $this->cache = $cache;
     }
-
 
     public function encode($value): string
     {
         return \json_encode($this->encodeRecursive($value));
     }
 
-    private function encodeRecursive($value)
+    private function encodeRecursive($value, array $stack = [])
     {
         if (is_array($value)) {
             foreach ($value as &$item) {
@@ -42,18 +36,21 @@ class JsonEncoder
 
             return $value;
         } elseif (is_object($value)) {
+            $objectHash = spl_object_hash($value);
+
+            if (isset($stack[$objectHash])) {
+                return null;
+            } else {
+                $stack[$objectHash] = true;
+            }
+
             $instance = new \stdClass();
 
             $methods = $this->findFunctions($value);
 
-
             foreach ($methods as $method) {
                 $propertyName = $this->getPropertyName($value, $method);
-                $instance->$propertyName = $this->encodeRecursive($value->$method());
-            }
-
-            if ($this->cache instanceof CacheInterface) {
-                $this->cache->setClassCached(get_class($value), true);
+                $instance->$propertyName = $this->encodeRecursive($value->$method(), $stack);
             }
 
             return $instance;
@@ -64,12 +61,12 @@ class JsonEncoder
 
     private function findFunctions($class): array
     {
-        $cacheIsActive = $this->cache instanceof CacheInterface;
+        $cacheIsEnabled = $this->cache->isEnabled();
 
-        if ($cacheIsActive) {
+        if ($cacheIsEnabled) {
             $className = get_class($class);
 
-            if ($this->cache->isClassCached($className)) {
+            if ($this->cache->isClassMethodsCached($className)) {
                 return $this->cache->getMethods($className);
             }
         }
@@ -78,7 +75,7 @@ class JsonEncoder
 
         $filteredFunctions = $this->filterFunctions($methods);
 
-        if ($cacheIsActive) {
+        if ($cacheIsEnabled) {
             $className = get_class($class);
             $this->cache->setMethods($className, $filteredFunctions);
         }
@@ -93,19 +90,20 @@ class JsonEncoder
 
     private function getPropertyName($class, string $method): string
     {
-        $cacheIsActive = $this->cache instanceof CacheInterface;
+        $cacheIsEnabled = $this->cache->isEnabled()
+                          && $this->cache->isPropertyCacheEnabled();
 
-        if ($cacheIsActive) {
+        if ($cacheIsEnabled) {
             $className = get_class($class);
 
-            if ($this->cache->isClassCached($className)) {
+            if ($this->cache->isClassPropertiesCached($className, $method)) {
                 return $this->cache->getPropertyName($className, $method);
             }
         }
 
         $propertyName = $this->methodFilter->getPropertyName($method);
 
-        if ($cacheIsActive) {
+        if ($cacheIsEnabled) {
             $className = get_class($class);
 
             $this->cache->setPropertyName($className, $method, $propertyName);
