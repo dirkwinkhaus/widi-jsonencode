@@ -1,0 +1,65 @@
+# check24 - pv - global git styles
+# get all project extensions with following one liner
+# find . -type f -name '*.*' | sed 's|.*\.||' | sort -u
+
+# Set default behaviour, in case users don't have core.autocrlf set.
+* text=auto
+
+# Explicitly declare text files we want to always be normalized and converted
+# to native line endings on checkout.
+
+*.bat text eol=lf
+*.combine text eol=lf
+*.conf text eol=lf
+*.css text eol=lf
+*.dist text eol=lf
+*.html text eol=lf
+*.inc text eol=lf
+*.ini text eol=lf
+*.js text eol=lf
+*.json text eol=lf
+*.less text eol=lf
+*.log text eol=lf
+*.markdown text eol=lf
+*.md text eol=lf
+*.php text eol=lf
+*.phtml text eol=lf
+*.svg text eol=lf
+*.rng text eol=lf
+*.scel text eol=lf
+*.txt text eol=lf
+*.xml text eol=lf
+*.yml text eol=lf
+.gitignore text eol=lf
+.gitattributes text eol=lf
+
+# enforce linux line breaks also for phpunit executable
+www/vendor/phpunit/phpunit/phpunit text eol=lf
+
+# Denote all files that are truly binary and should not be modified.
+
+*.png binary
+*.gif binary
+*.ico binary
+*.jpg binary
+*.jpeg binary
+*.wbmp binary
+*.otf binary
+*.jar binary
+*.pdf binary
+*.db binary
+*.ttf binary
+*.jar binary
+*.ico binary
+*.eot binary
+*.mo binary
+*.po binary
+*.eps binary
+*.zip binary
+*.phar binary
+*.psd binary
+*.woff binary
+*.woff2 binary
+*.xcf binary
+.gitkeep binary
+.empty binary

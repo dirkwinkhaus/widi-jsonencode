@@ -1,0 +1,19 @@
+{
+  "autoload": {
+    "psr-4": {
+      "Widi\\JsonEncode\\": "./src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Widi\\JsonEncode\\": [
+        "./demo",
+        "./test/unit",
+        "./test/integration"
+      ]
+    }
+  },
+  "require": {
+    "phpunit/phpunit": "^7.5"
+  }
+}

@@ -1,0 +1,13 @@
+*.sublime-project
+*.sublime-workspace
+*.swp
+*/**/*.swp
+.DS*
+._*
+.buildpath
+.idea/*
+.project
+.settings
+/.metadata/
+Thumbs.db
+vendor/
