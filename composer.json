@@ -1,4 +1,7 @@
 {
+  "name": "Widi/JsonEncode",
+  "description": "Makes a deep json encode without public properties.",
+  "license": "MIT",
   "autoload": {
     "psr-4": {
       "Widi\\JsonEncode\\": "./src"
