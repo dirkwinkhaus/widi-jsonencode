@@ -1,5 +1,5 @@
 {
-  "name": "Widi/JsonEncode",
+  "name": "widi/json-encode",
   "description": "Makes a deep json encode without public properties.",
   "license": "MIT",
   "autoload": {
