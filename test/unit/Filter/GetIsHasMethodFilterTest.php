@@ -11,7 +11,7 @@ class GetIsHasMethodFilterTest extends TestCase
      * @test
      * @dataProvider getMethods
      */
-    public function itShouldFilterGetAndIsMethods(string $method, bool $result)
+    public function itShouldFilterGetAndIsMethods(string $method, bool $result): void
     {
         $filter = new GetIsHasMethodFilter();
 
@@ -42,7 +42,7 @@ class GetIsHasMethodFilterTest extends TestCase
      * @test
      * @dataProvider getMethodsProperties
      */
-    public function itShouldExtractPropertyName(string $method, string $result)
+    public function itShouldExtractPropertyName(string $method, string $result): void
     {
         $filter = new GetIsHasMethodFilter();
 
