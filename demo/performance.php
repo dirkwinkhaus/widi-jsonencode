@@ -22,6 +22,15 @@ $distance = "\t\t\t";
 
 $loop = 0;
 while ($runs < $config['end']) {
+    $progress = floor(100 / ($config['end'] - $config['start'] / $config['step']) * $runs);
+
+    $loopInfo = 'Loop: ' . $loop . ' ('.$progress.'%)' . PHP_EOL;
+    echo $loopInfo;
+    file_put_contents(
+        'performance.log',
+        $loopInfo,
+        FILE_APPEND
+    );
     for ($variation = 0; $variation <3; $variation++) {
 
         if ($variation === 0) {
@@ -63,8 +72,7 @@ while ($runs < $config['end']) {
         $duration = microtime(true) - $start;
 
         $result = sprintf(
-            "Loop: %d $distance Variation: %d $distance Cycles: %d $distance Cache: %d $distance  MethodCache: %d $distance Duration: %f ms\n",
-            $loop,
+            "Variation: %d $distance Cycles: %d $distance Cache: %d $distance  MethodCache: %d $distance Duration: %f ms\n",
             $variation,
             $cycles,
             $cacheEnables,
@@ -72,7 +80,6 @@ while ($runs < $config['end']) {
             $duration
         );
 
-        echo floor(100 / ($config['end'] - $config['start'] / $config['step']) * $runs) . "%$distance";
         echo $result;
 
         file_put_contents(
@@ -80,6 +87,16 @@ while ($runs < $config['end']) {
             $result,
             FILE_APPEND
         );
+
+        if ($variation === 2) {
+            $line = '________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________' . PHP_EOL;
+            echo $loopInfo;
+            file_put_contents(
+                'performance.log',
+                $line,
+                FILE_APPEND
+            );
+        }
     }
 
     $runs += $config['step'];
