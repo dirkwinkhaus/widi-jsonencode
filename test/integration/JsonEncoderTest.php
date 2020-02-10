@@ -4,9 +4,14 @@ declare(strict_types=1);
 
 namespace Widi\JsonEncode;
 
+use DateTime;
 use PHPUnit\Framework\TestCase;
+use Widi\JsonEncode\Cache\ArrayCache;
 use Widi\JsonEncode\Cache\NoCache;
+use Widi\JsonEncode\Factory\JsonEncoderFactory;
 use Widi\JsonEncode\Filter\GetIsHasMethodFilter;
+use Widi\JsonEncode\Strategy\DateTimeStrategy;
+use Widi\JsonEncode\Strategy\DefaultStrategy;
 
 class JsonEncoderTest extends TestCase
 {
@@ -15,9 +20,19 @@ class JsonEncoderTest extends TestCase
      */
     public function itShouldEncodeRecursiveObjectTree(): void
     {
-        $encoder = new JsonEncoder(
+        $encoderFactory = new JsonEncoderFactory();
+        $encoder = $encoderFactory->create(
             new GetIsHasMethodFilter(),
-            new NoCache()
+            new ArrayCache(true, false),
+            new DefaultStrategy(),
+            [
+                DateTime::class => [
+                    'class' => DateTimeStrategy::class,
+                    'options' => [
+                        'format' => 'd.m.Y'
+                    ]
+                ]
+            ]
         );
 
         $provider      = new Provider('providerName');

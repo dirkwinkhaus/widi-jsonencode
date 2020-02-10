@@ -4,8 +4,12 @@ namespace Widi\JsonEncode;
 
 require_once '../vendor/autoload.php';
 
+use DateTime;
 use Widi\JsonEncode\Cache\ArrayCache;
+use Widi\JsonEncode\Factory\JsonEncoderFactory;
 use Widi\JsonEncode\Filter\GetIsHasMethodFilter;
+use Widi\JsonEncode\Strategy\DateTimeStrategy;
+use Widi\JsonEncode\Strategy\DefaultStrategy;
 
 $config = require 'performanceConfig.php';
 
@@ -24,15 +28,14 @@ $loop = 0;
 while ($runs < $config['end']) {
     $progress = floor(100 / ($config['end'] - $config['start'] / $config['step']) * $runs);
 
-    $loopInfo = 'Loop: ' . $loop . ' ('.$progress.'%)' . PHP_EOL;
+    $loopInfo = 'Loop: ' . $loop . ' (' . $progress . '%)' . PHP_EOL;
     echo $loopInfo;
     file_put_contents(
         'performance.log',
         $loopInfo,
         FILE_APPEND
     );
-    for ($variation = 0; $variation <3; $variation++) {
-
+    for ($variation = 0; $variation < 3; $variation++) {
         if ($variation === 0) {
             $cacheEnables = false;
             $methodCacheEnabled = false;
@@ -48,11 +51,20 @@ while ($runs < $config['end']) {
 
         $cycles = $runs;
 
-        $encoder = new JsonEncoder(
+        $encoderFactory = new JsonEncoderFactory();
+        $encoder = $encoderFactory->create(
             new GetIsHasMethodFilter(),
-            new ArrayCache($cacheEnables, $methodCacheEnabled)
+            new ArrayCache(true, false),
+            new DefaultStrategy(),
+            [
+                DateTime::class => [
+                    'class' => DateTimeStrategy::class,
+                    'options' => [
+                        'format' => 'd.m.Y'
+                    ]
+                ]
+            ]
         );
-
         $provider = new Provider('providerName');
         $tariffVersion = new TariffVersion('tariffVersionName');
         $tariff = new Tariff(

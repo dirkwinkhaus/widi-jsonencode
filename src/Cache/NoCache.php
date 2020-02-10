@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Widi\JsonEncode\Cache;
 
+use Widi\JsonEncode\Strategy\StrategyInterface;
+
 class NoCache implements CacheInterface
 {
     public function isEnabled(): bool
@@ -49,5 +51,15 @@ class NoCache implements CacheInterface
     public function isClassPropertiesCached(string $className, string $method): bool
     {
         return false;
+    }
+
+    public function setStrategy(string $className, StrategyInterface $strategy): CacheInterface
+    {
+        return $this;
+    }
+
+    public function getStrategy(string $className): ?StrategyInterface
+    {
+        return null;
     }
 }

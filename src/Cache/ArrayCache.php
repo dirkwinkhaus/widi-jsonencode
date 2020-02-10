@@ -1,11 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Widi\JsonEncode\Cache;
 
+use Widi\JsonEncode\Strategy\StrategyInterface;
+
 class ArrayCache implements CacheInterface
 {
-    /** @var array  */
+    /** @var array */
     private $cache = [];
 
     /** @var bool */
@@ -16,7 +19,7 @@ class ArrayCache implements CacheInterface
 
     public function __construct(bool $enabled, bool $propertyCacheEnabled)
     {
-        $this->enabled              = $enabled;
+        $this->enabled = $enabled;
         $this->propertyCacheEnabled = $propertyCacheEnabled;
     }
 
@@ -30,14 +33,14 @@ class ArrayCache implements CacheInterface
         return $this->propertyCacheEnabled;
     }
 
-    public function isClassMethodsCached(string $className): bool
-    {
-        return isset($this->cache[$className]);
-    }
-
     public function isClassPropertiesCached(string $className, string $method): bool
     {
-        return isset($this->cache[$className]['properties'][$method]);
+        return $this->isClassCached($className) && isset($this->cache[$className]['properties'][$method]);
+    }
+
+    public function isClassCached(string $className): bool
+    {
+        return isset($this->cache[$className]);
     }
 
     public function setMethods(string $className, array $methods): CacheInterface
@@ -56,6 +59,11 @@ class ArrayCache implements CacheInterface
         return [];
     }
 
+    public function isClassMethodsCached(string $className): bool
+    {
+        return $this->isClassCached($className) && isset($this->cache[$className]['methods']);
+    }
+
     public function setPropertyName(string $className, string $method, string $propertyName): CacheInterface
     {
         $this->cache[$className]['properties'][$method] = $propertyName;
@@ -65,8 +73,29 @@ class ArrayCache implements CacheInterface
 
     public function getPropertyName(string $className, string $method): string
     {
-        if ($this->isClassMethodsCached($className)) {
+        if ($this->isClassPropertiesCached($className, $method)) {
             return $this->cache[$className]['properties'][$method];
         }
+    }
+
+    public function setStrategy(string $className, StrategyInterface $strategy): CacheInterface
+    {
+        $this->cache[$className]['strategy'] = $strategy;
+
+        return $this;
+    }
+
+    public function getStrategy(string $className): ?StrategyInterface
+    {
+        if ($this->isClassStrategyCached($className)) {
+            return $this->cache[$className]['strategy'];
+        }
+
+        return null;
+    }
+
+    public function isClassStrategyCached(string $className): bool
+    {
+        return $this->isClassCached($className) && isset($this->cache[$className]['strategy']);
     }
 }
