@@ -2,11 +2,32 @@
 A light weight deep json encoder which avoids recursive encoding.
 
 ## Encoder
-The Encoder provides two methods. One to get the json data and another to get 
-a stdClass from your data
+Use the encoder like this:
 
 	public function encode($value): string;  // => json string
-	public function transform($value);       // => stdClass if value was object
+	
+## Encoder Factory
+The encoder Factory brings it all together. You may provide a dependency container to get strategies from it.
+It accepts container implementing "psr/container". Instance mapping will enable to look for class children of 
+mapped classes. For instance if you extend DateTime it will not be recognized by the mapper if instance mapping
+ist not enabled. By default it is enabled. You can disable it to be faster at serialization. 
+
+    $encoder = $encoderFactory->create(
+        new GetIsHasMethodFilter(),
+        new ArrayCache(true, false),
+        new DefaultStrategy(false),
+        [
+            DateTime::class => [
+                'class' => DateTimeStrategy::class,
+                'options' => [
+                    'format' => 'd.m.Y'
+                ]
+            ]
+        ],
+        true,
+        $dependencyContainer
+    );
+
 
 ## Filter
 The filter figures out which methods are important to get information from. You 
@@ -18,6 +39,11 @@ The cache will keep information about filtered methods and optionally even
 property names. The package includes an array cache an a no-cache cache like a
 null cache. You may write your own by using the CacheInterface.
 
+## Strategy
+There is a default strategy and a strategy for handling datetime objects. You may add 
+your own if necessary. Via class name and optional instance mapping the defined strategy
+will be found. Instance mapping can be disabled by the 5th argument of the encoder factory.  
+
 ## Usage
 	<?php
 	
@@ -28,10 +54,21 @@ null cache. You may write your own by using the CacheInterface.
 	use Widi\JsonEncode\Cache\ArrayCache;
 	use Widi\JsonEncode\Filter\GetIsHasMethodFilter;
 	
-	$encoder = new JsonEncoder(
-		new GetIsHasMethodFilter(),
-		new ArrayCache(true, false)
-	);
+    $encoderFactory = new JsonEncoderFactory();
+    $encoder = $encoderFactory->create(
+        new GetIsHasMethodFilter(),
+        new ArrayCache(true, false),
+        new DefaultStrategy(false),
+        [
+            DateTime::class => [
+                'class' => DateTimeStrategy::class,
+                'options' => [
+                    'format' => 'd.m.Y'
+                ]
+            ]
+        ],
+        true
+    );
 	
 	$provider = new Provider('providerName');
 	$tariffVersion = new TariffVersion('tariffVersionName');

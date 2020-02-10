@@ -15,7 +15,7 @@ $encoderFactory = new JsonEncoderFactory();
 $encoder = $encoderFactory->create(
     new GetIsHasMethodFilter(),
     new ArrayCache(true, false),
-    new DefaultStrategy(false),
+    new DefaultStrategy(true),
     [
         DateTime::class => [
             'class' => DateTimeStrategy::class,
@@ -23,7 +23,8 @@ $encoder = $encoderFactory->create(
                 'format' => 'd.m.Y'
             ]
         ]
-    ]
+    ],
+    true
 );
 
 $provider = new Provider('providerName');

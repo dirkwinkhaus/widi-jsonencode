@@ -13,19 +13,27 @@ class StrategyFactory implements StrategyFactoryInterface
 
     /** @var array */
     private $strategyMapping;
+
     /**
      * @var ContainerInterface|null
      */
     private $container;
 
+    /**
+     * @var bool
+     */
+    private $instanceMapping;
+
     public function __construct(
         StrategyInterface $defaultStrategy,
         array $strategyMapping = [],
+        bool $instanceMapping = true,
         ContainerInterface $container = null
     ) {
         $this->defaultStrategy = $defaultStrategy;
         $this->strategyMapping = $strategyMapping;
         $this->container = $container;
+        $this->instanceMapping = $instanceMapping;
     }
 
     public function create($value): StrategyInterface
@@ -33,20 +41,34 @@ class StrategyFactory implements StrategyFactoryInterface
         if (is_object($value)) {
             $className = get_class($value);
             if (isset($this->strategyMapping[$className])) {
-                if ($this->container instanceof ContainerInterface
-                    && $this->container->has($this->strategyMapping[$className]['class'])) {
-                    return $this->container->get($this->strategyMapping[$className]['class']);
-                }
+                return $this->createStrategy($className, $this->strategyMapping[$className]);
+            }
 
-                if (!class_exists($this->strategyMapping[$className]['class'])) {
-                    throw new StrategyClassNotFoundException($className);
+            if ($this->instanceMapping) {
+                foreach ($this->strategyMapping as $class => $config) {
+                    if (is_subclass_of($value, $class)) {
+                        return $this->createStrategy($className, $this->strategyMapping[$class]);
+                    }
                 }
-
-                $options = $this->strategyMapping[$className]['options'] ?? [];
-                return new $this->strategyMapping[$className]['class']($options);
             }
         }
 
         return $this->defaultStrategy;
+    }
+
+    private function createStrategy(string $className, array $mapping)
+    {
+        if ($this->container instanceof ContainerInterface
+            && $this->container->has($mapping['class'])) {
+            return $this->container->get($mapping['class']);
+        }
+
+        if (!class_exists($mapping['class'])) {
+            throw new StrategyClassNotFoundException($className);
+        }
+
+        $options = $mapping['options'] ?? [];
+
+        return new $mapping['class']($options);
     }
 }
