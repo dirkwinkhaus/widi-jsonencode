@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Widi\JsonEncode;
@@ -30,6 +31,14 @@ class TariffVersion
     }
 
     /**
+     * @return Provider
+     */
+    public function getProvider(): Provider
+    {
+        return $this->provider;
+    }
+
+    /**
      * @param Provider $provider
      *
      * @return TariffVersion
@@ -39,13 +48,5 @@ class TariffVersion
         $this->provider = $provider;
 
         return $this;
-    }
-
-    /**
-     * @return Provider
-     */
-    public function getProvider(): Provider
-    {
-        return $this->provider;
     }
 }

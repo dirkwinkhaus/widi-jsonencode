@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Widi\JsonEncode\Filter;
@@ -10,23 +11,6 @@ class GetIsHasMethodFilter implements MethodFilterInterface
         return function (string $method) {
             return $this->isGetMethod($method) || $this->isHasMethod($method) || $this->isIsMethod($method);
         };
-    }
-
-    public function getPropertyName(string $method): string
-    {
-        if ($this->isGetMethod($method)) {
-            return lcfirst(substr($method, 3));
-        }
-
-        if ($this->isHasMethod($method)) {
-            return lcfirst(substr($method, 3));
-        }
-
-        if ($this->isIsMethod($method)) {
-            return lcfirst(substr($method, 2));
-        }
-
-        return $method;
     }
 
     private function isGetMethod(string $method)
@@ -57,5 +41,22 @@ class GetIsHasMethodFilter implements MethodFilterInterface
         }
 
         return false;
+    }
+
+    public function getPropertyName(string $method): string
+    {
+        if ($this->isGetMethod($method)) {
+            return lcfirst(substr($method, 3));
+        }
+
+        if ($this->isHasMethod($method)) {
+            return lcfirst(substr($method, 3));
+        }
+
+        if ($this->isIsMethod($method)) {
+            return lcfirst(substr($method, 2));
+        }
+
+        return $method;
     }
 }
