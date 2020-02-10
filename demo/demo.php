@@ -15,7 +15,7 @@ $encoderFactory = new JsonEncoderFactory();
 $encoder = $encoderFactory->create(
     new GetIsHasMethodFilter(),
     new ArrayCache(true, false),
-    new DefaultStrategy(),
+    new DefaultStrategy(false),
     [
         DateTime::class => [
             'class' => DateTimeStrategy::class,
