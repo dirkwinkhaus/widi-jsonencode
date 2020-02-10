@@ -1,33 +1,47 @@
 Start performance test
 
-Loop: 0 (1%)
-Variation: 0 			 Cycles: 1000 			 Cache: 0 			  MethodCache: 0 			 Duration: 0.201991 ms
-Variation: 1 			 Cycles: 1000 			 Cache: 1 			  MethodCache: 0 			 Duration: 0.199059 ms
-Variation: 2 			 Cycles: 1000 			 Cache: 1 			  MethodCache: 1 			 Duration: 0.199039 ms
+Loop: 0 (10%)
+Variation: 0 			 Cycles: 1000 			 Cache: 0 			  MethodCache: 0 			 Duration: 0.201382 ms
+Variation: 1 			 Cycles: 1000 			 Cache: 1 			  MethodCache: 0 			 Duration: 0.203627 ms
+Variation: 2 			 Cycles: 1000 			 Cache: 1 			  MethodCache: 1 			 Duration: 0.199827 ms
 ________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
-Loop: 1 (2%)
-Variation: 0 			 Cycles: 2000 			 Cache: 0 			  MethodCache: 0 			 Duration: 0.402914 ms
-Variation: 1 			 Cycles: 2000 			 Cache: 1 			  MethodCache: 0 			 Duration: 0.401446 ms
-Variation: 2 			 Cycles: 2000 			 Cache: 1 			  MethodCache: 1 			 Duration: 0.400859 ms
+Loop: 1 (20%)
+Variation: 0 			 Cycles: 2000 			 Cache: 0 			  MethodCache: 0 			 Duration: 0.413291 ms
+Variation: 1 			 Cycles: 2000 			 Cache: 1 			  MethodCache: 0 			 Duration: 0.397692 ms
+Variation: 2 			 Cycles: 2000 			 Cache: 1 			  MethodCache: 1 			 Duration: 0.423481 ms
 ________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
-Loop: 2 (3%)
-Variation: 0 			 Cycles: 3000 			 Cache: 0 			  MethodCache: 0 			 Duration: 0.594014 ms
-Variation: 1 			 Cycles: 3000 			 Cache: 1 			  MethodCache: 0 			 Duration: 0.600700 ms
-Variation: 2 			 Cycles: 3000 			 Cache: 1 			  MethodCache: 1 			 Duration: 0.610998 ms
+Loop: 2 (30%)
+Variation: 0 			 Cycles: 3000 			 Cache: 0 			  MethodCache: 0 			 Duration: 0.599545 ms
+Variation: 1 			 Cycles: 3000 			 Cache: 1 			  MethodCache: 0 			 Duration: 0.600925 ms
+Variation: 2 			 Cycles: 3000 			 Cache: 1 			  MethodCache: 1 			 Duration: 0.595311 ms
 ________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
-Loop: 3 (4%)
-Variation: 0 			 Cycles: 4000 			 Cache: 0 			  MethodCache: 0 			 Duration: 0.809428 ms
-Variation: 1 			 Cycles: 4000 			 Cache: 1 			  MethodCache: 0 			 Duration: 0.804703 ms
-Variation: 2 			 Cycles: 4000 			 Cache: 1 			  MethodCache: 1 			 Duration: 0.796056 ms
+Loop: 3 (40%)
+Variation: 0 			 Cycles: 4000 			 Cache: 0 			  MethodCache: 0 			 Duration: 0.800330 ms
+Variation: 1 			 Cycles: 4000 			 Cache: 1 			  MethodCache: 0 			 Duration: 0.807410 ms
+Variation: 2 			 Cycles: 4000 			 Cache: 1 			  MethodCache: 1 			 Duration: 0.829610 ms
 ________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
-Loop: 4 (5%)
-Variation: 0 			 Cycles: 5000 			 Cache: 0 			  MethodCache: 0 			 Duration: 0.988810 ms
-Variation: 1 			 Cycles: 5000 			 Cache: 1 			  MethodCache: 0 			 Duration: 1.035922 ms
-Variation: 2 			 Cycles: 5000 			 Cache: 1 			  MethodCache: 1 			 Duration: 0.991605 ms
+Loop: 4 (50%)
+Variation: 0 			 Cycles: 5000 			 Cache: 0 			  MethodCache: 0 			 Duration: 0.981804 ms
+Variation: 1 			 Cycles: 5000 			 Cache: 1 			  MethodCache: 0 			 Duration: 1.026184 ms
+Variation: 2 			 Cycles: 5000 			 Cache: 1 			  MethodCache: 1 			 Duration: 0.992861 ms
 ________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
-Loop: 5 (6%)
-Variation: 0 			 Cycles: 6000 			 Cache: 0 			  MethodCache: 0 			 Duration: 1.190322 ms
-Variation: 1 			 Cycles: 6000 			 Cache: 1 			  MethodCache: 0 			 Duration: 1.195200 ms
-Variation: 2 			 Cycles: 6000 			 Cache: 1 			  MethodCache: 1 			 Duration: 1.243478 ms
+Loop: 5 (60%)
+Variation: 0 			 Cycles: 6000 			 Cache: 0 			  MethodCache: 0 			 Duration: 1.243320 ms
+Variation: 1 			 Cycles: 6000 			 Cache: 1 			  MethodCache: 0 			 Duration: 1.207007 ms
+Variation: 2 			 Cycles: 6000 			 Cache: 1 			  MethodCache: 1 			 Duration: 1.206787 ms
 ________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
-Loop: 6 (7%)
+Loop: 6 (70%)
+Variation: 0 			 Cycles: 7000 			 Cache: 0 			  MethodCache: 0 			 Duration: 1.410697 ms
+Variation: 1 			 Cycles: 7000 			 Cache: 1 			  MethodCache: 0 			 Duration: 1.400562 ms
+Variation: 2 			 Cycles: 7000 			 Cache: 1 			  MethodCache: 1 			 Duration: 1.428001 ms
+________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Loop: 7 (80%)
+Variation: 0 			 Cycles: 8000 			 Cache: 0 			  MethodCache: 0 			 Duration: 1.641077 ms
+Variation: 1 			 Cycles: 8000 			 Cache: 1 			  MethodCache: 0 			 Duration: 1.599100 ms
+Variation: 2 			 Cycles: 8000 			 Cache: 1 			  MethodCache: 1 			 Duration: 1.611319 ms
+________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+Loop: 8 (90%)
+Variation: 0 			 Cycles: 9000 			 Cache: 0 			  MethodCache: 0 			 Duration: 1.805384 ms
+Variation: 1 			 Cycles: 9000 			 Cache: 1 			  MethodCache: 0 			 Duration: 1.793158 ms
+Variation: 2 			 Cycles: 9000 			 Cache: 1 			  MethodCache: 1 			 Duration: 1.794665 ms
+________________________________________________________________________________________________________________________________________________________________________________________________________________________________________________
