@@ -15,6 +15,7 @@ interface JsonEncoderFactoryInterface
         CacheInterface $cache,
         StrategyInterface $defaultStrategy,
         array $strategyMapping,
+        bool $instanceMapping = true,
         ContainerInterface $container = null
     ): JsonEncoderInterface;
 }

@@ -37,8 +37,12 @@ class MyModel
 
 }
 
+class DT extends \DateTime
+{
+}
 
-$model = new MyModel(new \DateTime());
+
+$model = new MyModel(new DT());
 
 $encoderFactory = new JsonEncoderFactory();
 $encoder = $encoderFactory->create(
@@ -49,7 +53,8 @@ $encoder = $encoderFactory->create(
         \DateTime::class => [
             'class' => DateTimeStrategy::class,
         ]
-    ]
+    ],
+    true
 );
 
 echo $encoder->encode($model) . PHP_EOL;

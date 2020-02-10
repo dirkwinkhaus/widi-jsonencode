@@ -18,12 +18,13 @@ class JsonEncoderFactory implements JsonEncoderFactoryInterface
         CacheInterface $cache,
         StrategyInterface $defaultStrategy,
         array $strategyMapping,
+        bool $instanceMapping = true,
         ContainerInterface $container = null
     ): JsonEncoderInterface {
         $core = new Core(
             $methodFilter,
             $cache,
-            new StrategyFactory($defaultStrategy, $strategyMapping, $container)
+            new StrategyFactory($defaultStrategy, $strategyMapping, $instanceMapping, $container)
         );
 
         return new  JsonEncoder($core);
