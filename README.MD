@@ -22,6 +22,9 @@ ist not enabled. By default it is enabled. You can disable it to be faster at se
                 'options' => [
                     'format' => 'd.m.Y'
                 ]
+            ],
+            Collection::class => [
+                'class' => DoctrineCollectionStrategy::class
             ]
         ],
         true,
@@ -65,6 +68,9 @@ will be found. Instance mapping can be disabled by the 5th argument of the encod
                 'options' => [
                     'format' => 'd.m.Y'
                 ]
+            ],
+            Collection::class => [
+                'class' => DoctrineCollectionStrategy::class
             ]
         ],
         true
