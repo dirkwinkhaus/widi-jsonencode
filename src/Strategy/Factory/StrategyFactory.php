@@ -3,6 +3,7 @@
 namespace Widi\JsonEncode\Strategy\Factory;
 
 use Psr\Container\ContainerInterface;
+use Widi\JsonEncode\Exception\NoStrategyClassCreatedException;
 use Widi\JsonEncode\Exception\StrategyClassNotFoundException;
 use Widi\JsonEncode\Strategy\StrategyInterface;
 
@@ -67,8 +68,14 @@ class StrategyFactory implements StrategyFactoryInterface
             throw new StrategyClassNotFoundException($className);
         }
 
-        $options = $mapping['options'] ?? [];
+        $options = $mapping['options'] ?? null;
 
-        return new $mapping['class']($options);
+        $strategy = new $mapping['class']($options);
+
+        if (!$strategy instanceof StrategyInterface) {
+            throw new NoStrategyClassCreatedException($className);
+        }
+
+        return $strategy;
     }
 }

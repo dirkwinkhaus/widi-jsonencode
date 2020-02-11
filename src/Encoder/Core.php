@@ -52,9 +52,7 @@ class Core
 
             $this->cache->setStrategy($className, $strategy);
 
-            $instance = $strategy->createStdClass($value, $this, $stack);
-
-            return $instance;
+            return $strategy->createStdClass($value, $this, $stack);
         }
 
         return $value;

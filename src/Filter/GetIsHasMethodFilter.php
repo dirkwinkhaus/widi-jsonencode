@@ -15,6 +15,10 @@ class GetIsHasMethodFilter implements MethodFilterInterface
 
     private function isGetMethod(string $method)
     {
+        if (strlen($method) <= 3) {
+            return false;
+        }
+
         $substr = substr($method, 0, 3);
         if (($substr === 'get') && (ctype_upper($method[3]))) {
             return true;
@@ -25,6 +29,10 @@ class GetIsHasMethodFilter implements MethodFilterInterface
 
     private function isHasMethod(string $method)
     {
+        if (strlen($method) <= 2) {
+            return false;
+        }
+
         $substr = substr($method, 0, 3);
         if (($substr === 'has') && (ctype_upper($method[3]))) {
             return true;
@@ -35,6 +43,10 @@ class GetIsHasMethodFilter implements MethodFilterInterface
 
     private function isIsMethod(string $method)
     {
+        if (strlen($method) <= 2) {
+            return false;
+        }
+
         $substr = substr($method, 0, 2);
         if (($substr === 'is') && (ctype_upper($method[2]))) {
             return true;
@@ -46,14 +58,26 @@ class GetIsHasMethodFilter implements MethodFilterInterface
     public function getPropertyName(string $method): string
     {
         if ($this->isGetMethod($method)) {
+            if (strlen($method) === 3) {
+                return lcfirst($method);
+            }
+
             return lcfirst(substr($method, 3));
         }
 
         if ($this->isHasMethod($method)) {
+            if (strlen($method) === 3) {
+                return lcfirst($method);
+            }
+
             return lcfirst(substr($method, 3));
         }
 
         if ($this->isIsMethod($method)) {
+            if (strlen($method) === 2) {
+                return lcfirst($method);
+            }
+
             return lcfirst(substr($method, 2));
         }
 

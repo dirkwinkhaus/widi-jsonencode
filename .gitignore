@@ -11,3 +11,4 @@
 /.metadata/
 Thumbs.db
 vendor/
+composer.lock
