@@ -15,7 +15,7 @@ class Tariff
      */
     private $tariffVersion;
 
-    public function __construct(string $name, Provider $provider, TariffVersion $tariffVersion)
+    public function __construct(string $name, provider $provider, TariffVersion $tariffVersion)
     {
         $this->name = $name;
         $this->provider = $provider;
@@ -31,9 +31,9 @@ class Tariff
     }
 
     /**
-     * @return Provider
+     * @return class
      */
-    public function getProvider(): Provider
+    public function getProvider(): provider
     {
         return $this->provider;
     }
