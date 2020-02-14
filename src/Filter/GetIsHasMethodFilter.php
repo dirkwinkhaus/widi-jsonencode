@@ -29,7 +29,7 @@ class GetIsHasMethodFilter implements MethodFilterInterface
 
     private function isHasMethod(string $method)
     {
-        if (strlen($method) <= 2) {
+        if (strlen($method) <= 3) {
             return false;
         }
 
@@ -58,26 +58,14 @@ class GetIsHasMethodFilter implements MethodFilterInterface
     public function getPropertyName(string $method): string
     {
         if ($this->isGetMethod($method)) {
-            if (strlen($method) === 3) {
-                return lcfirst($method);
-            }
-
             return lcfirst(substr($method, 3));
         }
 
         if ($this->isHasMethod($method)) {
-            if (strlen($method) === 3) {
-                return lcfirst($method);
-            }
-
             return lcfirst(substr($method, 3));
         }
 
         if ($this->isIsMethod($method)) {
-            if (strlen($method) === 2) {
-                return lcfirst($method);
-            }
-
             return lcfirst(substr($method, 2));
         }
 
