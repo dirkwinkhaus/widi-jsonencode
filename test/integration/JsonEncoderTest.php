@@ -35,7 +35,7 @@ class JsonEncoderTest extends TestCase
             ]
         );
 
-        $provider      = new provider('providerName');
+        $provider      = new Provider('providerName');
         $tariffVersion = new TariffVersion('tariffVersionName');
         $tariff        = new Tariff(
             'tariffName',
