@@ -35,7 +35,10 @@ ist not enabled. By default it is enabled. You can disable it to be faster at se
 ## Filter
 The filter figures out which methods are important to get information from. You 
 may write your own by using the MethodFilterInterface. Included is a filter 
-to call any is*, get*, has* method of an object.
+to call any is*, get*, has* method of an object. There are two filters provided:
+- GetIsHasMethodFilter
+- GetIsHasMethodSnakeCaseFilter
+And you can easily define your own filter by using the filter interface.
 
 ## Cache
 The cache will keep information about filtered methods and optionally even 

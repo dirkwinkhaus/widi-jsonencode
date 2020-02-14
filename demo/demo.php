@@ -3,6 +3,9 @@
 namespace Widi\JsonEncode;
 
 require_once '../vendor/autoload.php';
+require_once 'provider.class.php';
+require_once 'tariff.class.php';
+require_once 'tariff_version.class.php';
 
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -10,6 +13,7 @@ use Doctrine\Common\Collections\Collection;
 use Widi\JsonEncode\Cache\ArrayCache;
 use Widi\JsonEncode\Factory\JsonEncoderFactory;
 use Widi\JsonEncode\Filter\GetIsHasMethodFilter;
+use Widi\JsonEncode\Filter\GetIsHasMethodSnakeCaseFilter;
 use Widi\JsonEncode\Strategy\DateTimeStrategy;
 use Widi\JsonEncode\Strategy\DefaultStrategy;
 use Widi\JsonEncode\Strategy\DoctrineCollectionStrategy;
@@ -33,18 +37,34 @@ $encoder = $encoderFactory->create(
     true
 );
 
-$provider = new Provider('providerName');
-$tariffVersion = new TariffVersion('tariffVersionName');
-$tariff = new Tariff(
+$collection = new ArrayCollection([1, 2]);
+
+echo $encoder->encode($collection) . PHP_EOL;
+
+
+$encoderSnakeCase = $encoderFactory->create(
+    new GetIsHasMethodSnakeCaseFilter(),
+    new ArrayCache(true, false),
+    new DefaultStrategy(true),
+    [
+        DateTime::class => [
+            'class' => DateTimeStrategy::class,
+            'options' => [
+                'format' => 'd.m.Y'
+            ]
+        ],
+    ],
+    true
+);
+
+$provider = new provider('providerName');
+$tariffVersion = new tariff_version('tariffVersionName');
+$tariff = new tariff(
     'tariffName',
     $provider,
     $tariffVersion
 );
-$provider->setTariffVersion($tariffVersion);
-$tariffVersion->setProvider($provider);
+$provider->set_tariff_version($tariffVersion);
+$tariffVersion->set_provider($provider);
 
-$collection = new ArrayCollection([$provider, $tariffVersion]);
-
-echo $encoder->encode($tariff) . PHP_EOL;
-
-echo $encoder->encode($collection) . PHP_EOL;
+echo $encoderSnakeCase->encode($tariff) . PHP_EOL;

@@ -14,7 +14,6 @@ class TariffVersion
     /**
      * Tariff constructor.
      * @param string $name
-     * @param Provider $provider
      */
     public function __construct(string $name)
     {
@@ -30,11 +29,11 @@ class TariffVersion
     }
 
     /**
-     * @param Provider $provider
+     * @param class $provider
      *
      * @return TariffVersion
      */
-    public function setProvider(Provider $provider): TariffVersion
+    public function setProvider(provider $provider): TariffVersion
     {
         $this->provider = $provider;
 
@@ -42,9 +41,9 @@ class TariffVersion
     }
 
     /**
-     * @return Provider
+     * @return class
      */
-    public function getProvider(): Provider
+    public function getProvider(): provider
     {
         return $this->provider;
     }
