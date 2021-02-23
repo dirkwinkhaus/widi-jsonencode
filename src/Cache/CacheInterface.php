@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Widi\JsonEncode\Cache;
 
+use Generator;
 use Widi\JsonEncode\Strategy\StrategyInterface;
 
 interface CacheInterface
@@ -27,4 +28,8 @@ interface CacheInterface
     public function setStrategy(string $className, StrategyInterface $strategy): CacheInterface;
 
     public function getStrategy(string $className): ?StrategyInterface;
+
+    public function setGeneratorContent(Generator $generator): CacheInterface;
+
+    public function getGeneratorContent(Generator $generator);
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Widi\JsonEncode\Encoder;
 
+use Generator;
 use Widi\JsonEncode\Cache\CacheInterface;
 use Widi\JsonEncode\Filter\MethodFilterInterface;
 use Widi\JsonEncode\Strategy\Factory\StrategyFactoryInterface;
@@ -31,6 +32,15 @@ class Core
 
     public function encodeRecursive($value, array $stack = [])
     {
+        if ($value instanceof Generator) {
+            $generatorContent = $this->cache->getGeneratorContent($value);
+            if ($generatorContent !== null) {
+                $value = $this->cache->getGeneratorContent($value);
+            } else {
+                $value = $this->cache->setGeneratorContent($value)->getGeneratorContent($value);
+            }
+        }
+
         if (is_array($value)) {
             foreach ($value as &$item) {
                 $item = $this->encodeRecursive($item);

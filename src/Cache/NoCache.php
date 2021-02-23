@@ -4,8 +4,12 @@ declare(strict_types=1);
 
 namespace Widi\JsonEncode\Cache;
 
+use Generator;
 use Widi\JsonEncode\Strategy\StrategyInterface;
 
+/**
+ * @deprecated Problems with generator values could be called
+ */
 class NoCache implements CacheInterface
 {
     public function isEnabled(): bool
@@ -59,6 +63,16 @@ class NoCache implements CacheInterface
     }
 
     public function getStrategy(string $className): ?StrategyInterface
+    {
+        return null;
+    }
+
+    public function setGeneratorContent(Generator $generator): CacheInterface
+    {
+        return $this;
+    }
+
+    public function getGeneratorContent(Generator $generator)
     {
         return null;
     }

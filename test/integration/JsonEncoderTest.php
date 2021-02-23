@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Widi\JsonEncode;
 
 use DateTime;
+use Generator;
 use PHPUnit\Framework\TestCase;
 use Widi\JsonEncode\Cache\ArrayCache;
-use Widi\JsonEncode\Cache\NoCache;
 use Widi\JsonEncode\Factory\JsonEncoderFactory;
 use Widi\JsonEncode\Filter\GetIsHasMethodFilter;
 use Widi\JsonEncode\Strategy\DateTimeStrategy;
@@ -29,15 +29,18 @@ class JsonEncoderTest extends TestCase
                 DateTime::class => [
                     'class' => DateTimeStrategy::class,
                     'options' => [
-                        'format' => 'd.m.Y'
-                    ]
-                ]
+                        'format' => 'd.m.Y',
+                    ],
+                ],
             ]
         );
 
-        $provider      = new Provider('providerName');
-        $tariffVersion = new TariffVersion('tariffVersionName');
-        $tariff        = new Tariff(
+        $provider = new Provider('providerName');
+        $tariffVersion = new TariffVersion(
+            'tariffVersionName',
+            $this->createGenerator()
+        );
+        $tariff = new Tariff(
             'tariffName',
             $provider,
             $tariffVersion
@@ -48,8 +51,15 @@ class JsonEncoderTest extends TestCase
         $this->assertEquals($this->getExpected(), $encoder->encode($tariff));
     }
 
+    private function createGenerator(): Generator
+    {
+        yield ['a', 'b', 'c'];
+        yield ['d', 'e', 'f'];
+        yield ['g', 'h', 'i'];
+    }
+
     public function getExpected(): string
     {
-        return '{"name":"tariffName","provider":{"name":"providerName","tariffVersion":{"name":"tariffVersionName","provider":null}},"tariffVersion":{"name":"tariffVersionName","provider":{"name":"providerName","tariffVersion":null}}}';
+        return '{"name":"tariffName","provider":{"name":"providerName","tariffVersion":{"name":"tariffVersionName","provider":null,"values":[["a","b","c"],["d","e","f"],["g","h","i"]]}},"tariffVersion":{"name":"tariffVersionName","provider":{"name":"providerName","tariffVersion":null},"values":[["a","b","c"],["d","e","f"],["g","h","i"]]}}';
     }
 }

@@ -6,10 +6,13 @@ require_once '../vendor/autoload.php';
 require_once 'provider.class.php';
 require_once 'tariff.class.php';
 require_once 'tariff_version.class.php';
+require_once 'generator_model.class.php';
 
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Generator;
+use generator_model;
 use Widi\JsonEncode\Cache\ArrayCache;
 use Widi\JsonEncode\Factory\JsonEncoderFactory;
 use Widi\JsonEncode\Filter\GetIsHasMethodFilter;
@@ -68,3 +71,13 @@ $provider->set_tariff_version($tariffVersion);
 $tariffVersion->set_provider($provider);
 
 echo $encoderSnakeCase->encode($tariff) . PHP_EOL;
+
+function generate(): Generator {
+    yield ['a', 'b', 'c'];
+    yield ['d', 'e', 'f'];
+    yield ['g', 'h', 'i'];
+}
+
+$generatorModel = new generator_model(1, 'name', generate());
+
+echo $encoderSnakeCase->encode($generatorModel) . PHP_EOL;
