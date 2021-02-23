@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace Widi\JsonEncode\Cache;
 
+use Generator;
 use Widi\JsonEncode\Strategy\StrategyInterface;
 
 class ArrayCache implements CacheInterface
 {
     /** @var array */
     private $cache = [];
+
+    /** @var array */
+    private $generatorCache = [];
 
     /** @var bool */
     private $enabled;
@@ -97,5 +101,17 @@ class ArrayCache implements CacheInterface
     public function isClassStrategyCached(string $className): bool
     {
         return $this->isClassCached($className) && isset($this->cache[$className]['strategy']);
+    }
+
+    public function setGeneratorContent(Generator $generator): CacheInterface
+    {
+        $this->generatorCache[spl_object_hash($generator)] = iterator_to_array($generator);
+
+        return $this;
+    }
+
+    public function getGeneratorContent(Generator $generator)
+    {
+        return $this->generatorCache[spl_object_hash($generator)] ?? null;
     }
 }

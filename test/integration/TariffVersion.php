@@ -3,21 +3,20 @@ declare(strict_types=1);
 
 namespace Widi\JsonEncode;
 
+use Generator;
+
 class TariffVersion
 {
-    /** @var string */
-    private $name;
+    private string $name;
 
-    /** @var Provider */
-    private $provider;
+    private Provider $provider;
 
-    /**
-     * Tariff constructor.
-     * @param string $name
-     */
-    public function __construct(string $name)
+    private Generator $values;
+
+    public function __construct(string $name, Generator $values)
     {
         $this->name = $name;
+        $this->values = $values;
     }
 
     /**
@@ -28,11 +27,6 @@ class TariffVersion
         return $this->name;
     }
 
-    /**
-     * @param class $provider
-     *
-     * @return TariffVersion
-     */
     public function setProvider(provider $provider): TariffVersion
     {
         $this->provider = $provider;
@@ -40,11 +34,13 @@ class TariffVersion
         return $this;
     }
 
-    /**
-     * @return class
-     */
     public function getProvider(): provider
     {
         return $this->provider;
+    }
+
+    public function getValues(): Generator
+    {
+        return $this->values;
     }
 }

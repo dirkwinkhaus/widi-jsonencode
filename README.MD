@@ -1,6 +1,11 @@
 # Widi\Json-Encode
 A light weight deep json encoder which avoids recursive encoding.
 
+# Changelog
+
+# 3.0.0
+    + add generator support
+
 ## Encoder
 Use the encoder like this:
 
