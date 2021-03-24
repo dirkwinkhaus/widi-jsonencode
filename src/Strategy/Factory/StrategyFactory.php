@@ -68,7 +68,7 @@ class StrategyFactory implements StrategyFactoryInterface
             throw new StrategyClassNotFoundException($className);
         }
 
-        $options = $mapping['options'] ?? null;
+        $options = $mapping['options'] ?? [];
 
         $strategy = new $mapping['class']($options);
 

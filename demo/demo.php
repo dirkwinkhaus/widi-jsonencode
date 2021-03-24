@@ -13,6 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Generator;
 use generator_model;
+use stdClass;
 use Widi\JsonEncode\Cache\ArrayCache;
 use Widi\JsonEncode\Factory\JsonEncoderFactory;
 use Widi\JsonEncode\Filter\GetIsHasMethodFilter;
@@ -20,6 +21,7 @@ use Widi\JsonEncode\Filter\GetIsHasMethodSnakeCaseFilter;
 use Widi\JsonEncode\Strategy\DateTimeStrategy;
 use Widi\JsonEncode\Strategy\DefaultStrategy;
 use Widi\JsonEncode\Strategy\DoctrineCollectionStrategy;
+use Widi\JsonEncode\Strategy\StdClassStrategy;
 
 $encoderFactory = new JsonEncoderFactory();
 $encoder = $encoderFactory->create(
@@ -30,15 +32,32 @@ $encoder = $encoderFactory->create(
         DateTime::class => [
             'class' => DateTimeStrategy::class,
             'options' => [
-                'format' => 'd.m.Y'
-            ]
+                'format' => 'd.m.Y',
+            ],
         ],
         Collection::class => [
-            'class' => DoctrineCollectionStrategy::class
-        ]
+            'class' => DoctrineCollectionStrategy::class,
+        ],
+        stdClass::class => [
+            'class' => StdClassStrategy::class,
+        ],
     ],
     true
 );
+
+$c = new stdClass();
+$c->c = 'c';
+
+$d = new stdClass();
+$d->date = new DateTime();
+
+$a = new stdClass();
+$a->a = 'a';
+$a->b = 'b';
+$d->a = $a;
+$a->c = new ArrayCollection([$c, $d]);
+
+echo $encoder->encode($a) . PHP_EOL;
 
 $collection = new ArrayCollection([1, 2]);
 
@@ -53,8 +72,8 @@ $encoderSnakeCase = $encoderFactory->create(
         DateTime::class => [
             'class' => DateTimeStrategy::class,
             'options' => [
-                'format' => 'd.m.Y'
-            ]
+                'format' => 'd.m.Y',
+            ],
         ],
     ],
     true
@@ -72,7 +91,8 @@ $tariffVersion->set_provider($provider);
 
 echo $encoderSnakeCase->encode($tariff) . PHP_EOL;
 
-function generate(): Generator {
+function generate(): Generator
+{
     yield ['a', 'b', 'c'];
     yield ['d', 'e', 'f'];
     yield ['g', 'h', 'i'];
