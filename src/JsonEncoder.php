@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Widi\JsonEncode;
 
+use stdClass;
 use Widi\JsonEncode\Encoder\Core;
 
 use function json_encode;
@@ -22,6 +23,12 @@ class JsonEncoder implements JsonEncoderInterface
 
     public function encode($value): string
     {
-        return json_encode($this->core->encodeRecursive($value));
+        return json_encode($this->toStdClass($value));
+    }
+
+    /** @inheritDoc */
+    public function toStdClass($value)
+    {
+        return $this->core->encodeRecursive($value);
     }
 }

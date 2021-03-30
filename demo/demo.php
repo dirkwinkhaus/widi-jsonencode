@@ -100,4 +100,5 @@ function generate(): Generator
 
 $generatorModel = new generator_model(1, 'name', generate());
 
+$stdclass = $encoderSnakeCase->toStdClass(new ArrayCollection([[]]));
 echo $encoderSnakeCase->encode($generatorModel) . PHP_EOL;
